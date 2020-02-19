@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-const addProductAction=(ten,virus,condition)=>{
+
+const addPatientAction=(ten,virus,condition)=>{
     return axios.post('/add',{ten,virus,condition})
     .then((res)=>res.data)
 }
@@ -8,6 +9,7 @@ class AddPatient extends Component {
     constructor(props){
         super(props);
         this.state ={
+            data:null,
             ten: '',
             virus:'',
             condition:'',
@@ -23,35 +25,40 @@ class AddPatient extends Component {
     }
     handleClick=()=>{
         var{ten,virus,condition} =this.state;
-        var dataTemp = {};
-        var item = {};
-        item.ten = this.state.ten;
-        item.virus=this.state.virus;
-        item.condition=this.state.condition;
-
-        dataTemp =this.state.data;
-        
-        if(item.ten !== ''){
-            dataTemp.push(item);
-            
+        var dataTemp = {
+            name:this.state.ten,
+            virus:this.state.virus,
+            condition:this.state.condition
+        };
+        if(dataTemp.name !== null)
+        {
+            addPatientAction(ten,virus,condition).then((resp)=>{  
+            })
         }
-        console.log(dataTemp);
+
         
         
-        addProductAction(ten,virus,condition).then((resp)=>{
-            console.log(resp);
-        })
+        
     }
 
     render() {
         return (
             <div className="container">
-            <div className="jumbotron">
-              <h1 className="display-3">Quản lý xét nghiệm</h1>
-              <p className="lead">MongoDB</p>
-              <hr className="my-2" />
-              
-            </div>
+            <form >
+                <div className="form-group">
+                  <label htmlFor="ten">Tên</label>
+                  <input onChange={(event)=>this.isChange(event)} type="text" className="form-control" name="ten" id aria-describedby="helpId" placeholder="Nhập Tên" />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="virus">Tên virus</label>
+                  <input onChange={(event)=>this.isChange(event)} type="text" className="form-control" name="virus" id aria-describedby="helpId" placeholder="Nhập tên virus" />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="condition">Trạng thái</label>
+                  <input onChange={(event)=>this.isChange(event)} type="text" className="form-control" name="condition" id aria-describedby="helpId" placeholder="Dương tính/Âm tính" />
+                </div>
+                <button type="reset" onClick={()=>this.handleClick()} className="btn btn-primary">Submit</button>
+              </form>
           </div>
           
         );

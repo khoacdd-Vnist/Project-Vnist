@@ -1,7 +1,51 @@
 import React, { Component } from 'react';
+import {
+  BrowserRouter,
+  Route,
+  Link
+  } from 'react-router-dom'
 import HeadTitle from './HeadTitle';
 import Patient from './Patient';
+import AddPatient from './AddPatient';
+import View from './View';
 
+class App extends Component {
+  constructor(props){
+    super(props);
+    this.state={
+      data:null, ten: '',
+      virus:'',
+      condition:''
+
+    }
+  }
+
+render(){
+    return(
+      <BrowserRouter>
+    <div>
+      <ul>
+        <li><Link to="/">Home</Link></li>
+        <li><Link to="/add">Them</Link></li>
+        <li><Link to="/view">Xem</Link></li>
+        <li><Link to="/manage">Quan ly</Link></li>
+      </ul>   
+    </div>
+    <switch>
+      <Route exact path='/' component ={HeadTitle}/>
+      <Route path="/add" component ={AddPatient}/>
+      <Route path="/view" component ={View}/>
+      <Route path="/manage" component ={AddPatient}/>     
+    </switch>
+</BrowserRouter>
+    )
+}
+}
+
+
+
+export default App;
+/*
 const axios =require('axios');
 const getPatientData =() => axios.get('/view')
              .then ((res)=> res.data)
@@ -110,3 +154,4 @@ handleClick=()=>{
 }
 
 export default App;
+*/
